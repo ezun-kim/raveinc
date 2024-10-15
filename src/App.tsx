@@ -86,8 +86,9 @@ export default function Component() {
       <header className={`bg-white/80 z-50 backdrop-blur-md text-gray-900 py-4 transition-all duration-300 ${isHeaderSticky ? 'fixed top-0 left-0 right-0' : ''}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
-            <img src="/logo.svg?height=16&width=32" alt="Rave Inc. Logo" className="h-6 w-auto mr-2" />
-            {/* <span className="text-xl font-semibold">Rave Inc.</span> */}
+            <a href="https://sheem.me/" target="_blank" rel="noopener noreferrer">
+              <img src="/logo.svg?height=16&width=32" alt="Rave Inc. Logo" className="h-6 w-auto mr-2" />
+            </a>
           </div>
           <nav className="flex items-center">
             <ul className="hidden md:flex space-x-6 mr-6">
@@ -120,9 +121,10 @@ export default function Component() {
         {/* Dimmer overlay */}
         <div className="absolute z-10 w-full h-full bg-black opacity-50"></div>
         <div className="relative z-20 container mx-auto px-4 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">{t.hero.title}</h1>
-          <p className="text-xl mb-8">{t.hero.subtitle}</p>
-          <a href="#contact" className="bg-zinc-900 text-white px-8 py-3 rounded-full hover:bg-zinc-700 transition duration-300">{t.hero.cta}</a>
+          <h1 className="text-5xl font-bold mb-8 leading-normal">{renderTextWithLineBreaks(t.hero.title)}</h1>
+          {/* <div className="w-16 h-0.5 bg-white mx-auto my-8"></div> */}
+          <p className="text-xl mb-8">{renderTextWithLineBreaks(t.hero.subtitle)}</p>
+          <a href="#contact" className="bg-white/10 backdrop-blur-lg text-white px-8 py-3 rounded-full hover:bg-white/30 transition duration-300">{t.hero.cta}</a>
         </div>
       </section>
 
@@ -132,7 +134,7 @@ export default function Component() {
           <h2 className="text-4xl font-bold text-center mb-12">{t.about.title}</h2>
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
-              <img src="/placeholder.svg?height=400&width=600" alt="About Rave Inc." className="rounded-lg" />
+              <img src="/sheem_preview.jpg?height=400&width=600" alt="About Rave Inc." className="rounded-lg" />
             </div>
             <div className="md:w-1/2 md:pl-12">
               <p className="text-lg mb-6">{renderTextWithLineBreaks(t.about.description)}</p>
@@ -154,12 +156,27 @@ export default function Component() {
             <div className="bg-white p-8 rounded-lg">
               <Brain className="w-16 h-16 mb-6 text-zinc-900" />
               <h3 className="text-2xl font-semibold mb-4">{t.services.ai.title}</h3>
-              <p className="text-gray-900">{renderTextWithLineBreaks(t.services.ai.description)}</p>
+              <p className="text-gray-900 mb-6">{renderTextWithLineBreaks(t.services.ai.description)}</p>
+              <a 
+                href="tel:+827080952094" 
+                className="inline-flex items-center bg-zinc-900 text-white px-4 py-2 rounded-full hover:bg-zinc-700 transition duration-300"
+              >
+                <Phone className="w-4 h-4 mr-2" />
+                {t.services.ai.cta}
+              </a>
             </div>
             <div className="bg-white p-8 rounded-lg">
               <Building className="w-16 h-16 mb-6 text-zinc-900" />
               <h3 className="text-2xl font-semibold mb-4">{t.services.lounge.title}</h3>
-              <p className="text-gray-900">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
+              <p className="text-gray-900 mb-4">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
+              <a 
+                href="https://sheem.me/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-block bg-zinc-900 text-white px-4 py-2 rounded-full hover:bg-zinc-700 transition duration-300"
+              >
+                {t.services.lounge.cta}
+              </a>
             </div>
           </div>
         </div>
@@ -232,17 +249,27 @@ export default function Component() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">{t.testimonials.title}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900 ">{t.testimonials.title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             {t.testimonials.items.map((item, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg">
-                <p className="mb-6 italic text-gray-900">"{item.quote}"</p>
-                <p className="font-semibold">{item.author}</p>
-                <p className="text-zinc-900">{item.position}</p>
+              <div key={index} className="bg-white p-10 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                <p className="mb-8 text-xl leading-relaxed text-gray-700">"{item.quote}"</p>
+                <p className="font-semibold text-lg text-gray-900">{item.author}</p>
+                <p className="text-gray-600">{item.position}</p>
               </div>
             ))}
+          </div>
+          <div className="text-center">
+            <a 
+              href="https://map.naver.com/p/entry/place/1340054150?c=15.00,0,0,0,dh&placePath=/review" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-block bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              {t.testimonials.seeMore}
+            </a>
           </div>
         </div>
       </section>
@@ -273,6 +300,7 @@ export default function Component() {
                   required
                 />
                 <textarea
+                  
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
