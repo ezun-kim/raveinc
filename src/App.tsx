@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Users, Building, TrendingUp, Globe, CheckCircle, Mail, Phone, MapPin, AlertTriangle, BarChart2 } from 'lucide-react';
+import { Brain, Users, Building, TrendingUp, Globe, CheckCircle, Mail, Phone, MapPin, AlertTriangle, BarChart2, ChevronLeft, ChevronRight, Star as StarFilled } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { en } from './lang/en';
 import { ko } from './lang/ko';
@@ -19,6 +19,8 @@ const renderTextWithLineBreaks = (text: string) => {
 export default function Component() {
   const [lang, setLang] = useState<'en' | 'ko'>('ko');
   const [isHeaderSticky, setIsHeaderSticky] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = ['/sheem_preview.jpg', '/solutions.png']; // 캐러셀에 표시할 이미지 목록
   const t = content[lang];
 
   // New state for form inputs
@@ -28,6 +30,7 @@ export default function Component() {
     message: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +50,31 @@ export default function Component() {
       },
     });
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    const imageInterval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // 5초마다 이미지 전환
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(imageInterval);
+    };
   }, []);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  const nextReview = () => {
+    setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % t.testimonials.items.length);
+  };
+
+  const prevReview = () => {
+    setCurrentReviewIndex((prevIndex) => (prevIndex - 1 + t.testimonials.items.length) % t.testimonials.items.length);
+  };
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -94,7 +120,6 @@ export default function Component() {
             <ul className="hidden md:flex space-x-6 mr-6">
               <li><a href="#about" className="hover:text-zinc-900 transition duration-300">{t.nav.about}</a></li>
               <li><a href="#services" className="hover:text-zinc-900 transition duration-300">{t.nav.services}</a></li>
-              <li><a href="#showcase" className="hover:text-zinc-900 transition duration-300">{t.nav.showcase}</a></li>
               <li><a href="#team" className="hover:text-zinc-900 transition duration-300">{t.nav.team}</a></li>
               <li><a href="#contact" className="hover:text-zinc-900 transition duration-300">{t.nav.contact}</a></li>
             </ul>
@@ -133,8 +158,32 @@ export default function Component() {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">{t.about.title}</h2>
           <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <img src="/sheem_preview.jpg?height=400&width=600" alt="About Rave Inc." className="rounded-lg" />
+            <div className="md:w-1/2 mb-8 md:mb-0 relative">
+              <img 
+                src={images[currentImageIndex]} 
+                alt="About Rave Inc." 
+                className="rounded-lg w-full h-auto transition-opacity duration-500"
+              />
+              <button 
+                onClick={prevImage} 
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full"
+              >
+                <ChevronLeft className="w-6 h-6 text-gray-800" />
+              </button>
+              <button 
+                onClick={nextImage} 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/50 p-2 rounded-full"
+              >
+                <ChevronRight className="w-6 h-6 text-gray-800" />
+              </button>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {images.map((_, index) => (
+                  <div 
+                    key={index} 
+                    className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-gray-400'}`}
+                  ></div>
+                ))}
+              </div>
             </div>
             <div className="md:w-1/2 md:pl-12">
               <p className="text-lg mb-6">{renderTextWithLineBreaks(t.about.description)}</p>
@@ -153,70 +202,63 @@ export default function Component() {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">{t.services.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg">
-              <Brain className="w-16 h-16 mb-6 text-zinc-900" />
-              <h3 className="text-2xl font-semibold mb-4">{t.services.ai.title}</h3>
-              <p className="text-gray-900 mb-6">{renderTextWithLineBreaks(t.services.ai.description)}</p>
+            <div className="bg-white p-8 rounded-lg flex flex-col items-center">
+              <img src="/cally.svg" alt="Cally" className="h-24 mt-6 mb-12" />
+              <h3 className="text-2xl font-semibold mb-4">{t.services.cally.title}</h3>
+              <p className="text-gray-900 mb-6 text-center">{renderTextWithLineBreaks(t.services.cally.description)}</p>
               <a 
                 href="tel:+827080952094" 
-                className="inline-flex items-center bg-zinc-900 text-white px-4 py-2 rounded-full hover:bg-zinc-700 transition duration-300"
+                className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full hover:from-blue-600 hover:to-purple-700 transition duration-300 text-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
-                <Phone className="w-4 h-4 mr-2" />
-                {t.services.ai.cta}
+                <Phone className="w-6 h-6 mr-3 animate-pulse" />
+                <span className="relative">
+                  <span className="relative">{t.services.cally.cta}</span>
+                </span>
               </a>
             </div>
-            <div className="bg-white p-8 rounded-lg">
-              <Building className="w-16 h-16 mb-6 text-zinc-900" />
+            <div className="bg-white p-8 rounded-lg flex flex-col items-center">
+              <img src="/sheem.svg" alt="sheem" className="h-24 mt-6 mb-12" />
               <h3 className="text-2xl font-semibold mb-4">{t.services.lounge.title}</h3>
-              <p className="text-gray-900 mb-4">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
-              <a 
-                href="https://sheem.me/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-block bg-zinc-900 text-white px-4 py-2 rounded-full hover:bg-zinc-700 transition duration-300"
-              >
-                {t.services.lounge.cta}
-              </a>
+              <p className="text-gray-900 mb-4 text-center">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
+              <div className="mb-6">
+                {/* <h4 className="font-semibold mb-2">{t.services.lounge.locations.title}</h4> */}
+                <ul className="list-disc list-inside">
+                  <li>{t.services.lounge.locations.gangnam}</li>
+                  <li>{t.services.lounge.locations.nambu}</li>
+                </ul>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href="https://sheem.me/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-block bg-zinc-900 text-white px-8 py-4 rounded-full hover:bg-zinc-700 transition duration-300"
+                >
+                  {t.services.lounge.cta}
+                </a>
+                <a 
+                  href="https://map.naver.com/p/entry/place/1340054150?c=15.00,0,0,0,dh" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center bg-green-500 text-white px-8 py-4 rounded-full hover:bg-green-600 transition duration-300"
+                >
+                  <MapPin className="w-5 h-5 mr-2" />
+                  {t.services.lounge.location}
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Showcase Section */}
-      <section id="showcase" className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-4">{t.showcase.title}</h2>
-          <h3 className="text-2xl text-center mb-8">{t.showcase.subtitle}</h3>
-          <p className="text-center mb-12 text-gray-900">{renderTextWithLineBreaks(t.showcase.description)}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {t.showcase.features.map((feature, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md">
-                {index === 0 && <Brain className="w-12 h-12 mb-6 text-zinc-900" />}
-                {index === 1 && <CheckCircle className="w-12 h-12 mb-6 text-zinc-900" />}
-                {index === 2 && <Building className="w-12 h-12 mb-6 text-zinc-900" />}
-                {index === 3 && <BarChart2 className="w-12 h-12 mb-6 text-zinc-900" />}
-                {index === 4 && <AlertTriangle className="w-12 h-12 mb-6 text-zinc-900" />}
-                {index === 5 && <AlertTriangle className="w-12 h-12 mb-6 text-zinc-900" />}
-                <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-gray-900">{renderTextWithLineBreaks(feature.description)}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <a href="#contact" className="bg-zinc-900 text-white px-8 py-3 rounded-full hover:bg-zinc-700 transition duration-300">
-              {t.showcase.cta}
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* Team Section */}
-      <section id="team" className="py-20 bg-gray-100">
+      <section id="team" className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">{t.team.title}</h2>
           <div className="max-w-4xl mx-auto">
             {t.team.members.map((member, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md">
+              <div key={index} className="bg-white p-8 rounded-lg">
                 <div className="flex flex-col md:flex-row items-center md:items-start">
                   <img src={member.image} alt={member.name} className="w-32 h-32 rounded-full mb-6 md:mb-0 md:mr-8" />
                   <div>
@@ -249,24 +291,42 @@ export default function Component() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900 ">{t.testimonials.title}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-            {t.testimonials.items.map((item, index) => (
-              <div key={index} className="bg-white p-10 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl">
-                <p className="mb-8 text-xl leading-relaxed text-gray-700">"{item.quote}"</p>
-                <p className="font-semibold text-lg text-gray-900">{item.author}</p>
-                <p className="text-gray-600">{item.position}</p>
+          <h2 className="text-4xl font-bold text-center mb-12">{t.testimonials.title}</h2>
+          <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg relative">
+            <button 
+              onClick={prevReview} 
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </button>
+            <button 
+              onClick={nextReview} 
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-600" />
+            </button>
+            <div className="text-center">
+              <p className="text-xl italic mb-6">"{renderTextWithLineBreaks(t.testimonials.items[currentReviewIndex].quote)}"</p>
+              <div className="flex justify-center mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <StarFilled 
+                    key={i} 
+                    className={`w-6 h-6 ${i < t.testimonials.items[currentReviewIndex].rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                  />
+                ))}
               </div>
-            ))}
+              <p className="font-semibold">{t.testimonials.items[currentReviewIndex].author}</p>
+              <p className="text-gray-600">{t.testimonials.items[currentReviewIndex].position}</p>
+            </div>
           </div>
-          <div className="text-center">
+          <div className="text-center mt-8">
             <a 
               href="https://map.naver.com/p/entry/place/1340054150?c=15.00,0,0,0,dh&placePath=/review" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-block bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-block bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300"
             >
               {t.testimonials.seeMore}
             </a>
