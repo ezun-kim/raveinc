@@ -146,7 +146,7 @@ export default function Component() {
         {/* Dimmer overlay */}
         <div className="absolute z-10 w-full h-full bg-black opacity-50"></div>
         <div className="relative z-20 container mx-auto px-4 text-center text-white">
-          <h1 className="text-5xl font-bold mb-8 leading-normal">{renderTextWithLineBreaks(t.hero.title)}</h1>
+          <h1 className="text-4xl font-bold mb-8 leading-normal">{renderTextWithLineBreaks(t.hero.title)}</h1>
           {/* <div className="w-16 h-0.5 bg-white mx-auto my-8"></div> */}
           <p className="text-xl mb-8">{renderTextWithLineBreaks(t.hero.subtitle)}</p>
           <a href="#contact" className="bg-white/10 backdrop-blur-lg text-white px-8 py-3 rounded-full hover:bg-white/30 transition duration-300">{t.hero.cta}</a>
@@ -156,7 +156,7 @@ export default function Component() {
       {/* About Us Section */}
       <section id="about" className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">{t.about.title}</h2>
+          <h2 className="text-4xl font-bold text-center mb-12">{renderTextWithLineBreaks(t.about.title)}</h2>
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0 relative">
               <img 
@@ -202,10 +202,10 @@ export default function Component() {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">{t.services.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg flex flex-col items-center">
+            <div className="bg-white p-8 rounded-lg flex flex-col items-center text-center">
               <img src="/cally.svg" alt="Cally" className="h-24 mt-6 mb-12" />
               <h3 className="text-2xl font-semibold mb-4">{t.services.cally.title}</h3>
-              <p className="text-gray-900 mb-6 text-center">{renderTextWithLineBreaks(t.services.cally.description)}</p>
+              <p className="text-gray-900 mb-6">{renderTextWithLineBreaks(t.services.cally.description)}</p>
               <a 
                 href="tel:+827080952094" 
                 className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full hover:from-blue-600 hover:to-purple-700 transition duration-300 text-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
@@ -216,12 +216,11 @@ export default function Component() {
                 </span>
               </a>
             </div>
-            <div className="bg-white p-8 rounded-lg flex flex-col items-center">
+            <div className="bg-white p-8 rounded-lg flex flex-col items-center text-center">
               <img src="/sheem.svg" alt="sheem" className="h-24 mt-6 mb-12" />
               <h3 className="text-2xl font-semibold mb-4">{t.services.lounge.title}</h3>
-              <p className="text-gray-900 mb-4 text-center">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
+              <p className="text-gray-900 mb-4">{renderTextWithLineBreaks(t.services.lounge.description)}</p>
               <div className="mb-6">
-                {/* <h4 className="font-semibold mb-2">{t.services.lounge.locations.title}</h4> */}
                 <ul className="list-disc list-inside">
                   <li>{t.services.lounge.locations.gangnam}</li>
                   <li>{t.services.lounge.locations.nambu}</li>
