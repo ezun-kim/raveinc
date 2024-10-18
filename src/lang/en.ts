@@ -88,11 +88,16 @@ export const en = {
         image: "/euijun.jpeg",
         linkedin: "https://www.linkedin.com/in/ezunkim/",
         achievements: [
-          "2023 Samsung Electronics QLED TV SmartHub Sound Design",
+          "2024 Founded Rave Inc.",
+          "2023 Senior UX Researcher, VD Business Division, Samsung Electronics",
+          "2022 iF Design Award 'Device Sync' Category Winner",
           "2021 iF Design Award 'Generative Soundscape' Category Finalist",
-          "2020 iF Design Award 'Device Sync' Category Winner",
-          "2018 Samsung Electronics Advanced UX Designer",
-          "2015 Samsung Electronics Super Rookie Award"
+          "2018 Sound Designer/Interaction Designer, VD Business Division, Samsung Electronics",
+          "2016 Audio Product Planning, VD Business Division, Samsung Electronics",
+          "2015 Completed Samsung Electronics Software Membership",
+          "2015 Graduated from Dongguk University, College of Engineering, Multimedia Engineering",
+          "2011 SW Development Soldier, Information System Management Group, Army Headquarters",
+          "2008 Graduated from Korea Game Science High School"
         ],
         skills: [
           "Full-stack Development",
