@@ -207,7 +207,7 @@ export default function Component() {
               <h3 className="text-2xl font-semibold mb-4">{t.services.cally.title}</h3>
               <p className="text-gray-900 mb-6">{renderTextWithLineBreaks(t.services.cally.description)}</p>
               <a 
-                href="tel:+827080952094" 
+                href="https://cally.kr" 
                 className="inline-flex items-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full hover:from-blue-600 hover:to-purple-700 transition duration-300 text-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 <Phone className="w-6 h-6 mr-3 animate-pulse" />
