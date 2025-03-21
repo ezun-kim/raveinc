@@ -397,10 +397,8 @@ export default function Component() {
       {/* Footer */}
       <footer className="bg-zinc-900 text-white py-12">
         <div className="container mx-auto px-4 text-center">
-          <p className="mb-4">&copy; 2023 Rave Inc. All rights reserved.</p>
+          <p className="mb-4">&copy; 2025 Rave Inc. All rights reserved.</p>
           <div className="flex justify-center space-x-4">
-            <a href="#" className="hover:text-zinc-400 transition duration-300">Privacy Policy</a>
-            <a href="#" className="hover:text-zinc-400 transition duration-300">Terms of Service</a>
           </div>
         </div>
       </footer>

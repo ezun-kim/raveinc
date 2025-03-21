@@ -164,7 +164,7 @@ export const ko = {
       info: {
         title: "연락처 정보",
         email: "contact@rave.kr",
-        phone: "+82 70 8095 2094",
+        phone: "1668-0655",
         address: "서울특별시 서초구 서초중앙로 45, 1114호",
         description: "우리는 항상 잠재적 파트너와 고객의 연락을 기다리고 있습니다. 데모를 예약하거나 협력 방안을 논의하려면 연락 주세요."
       }
